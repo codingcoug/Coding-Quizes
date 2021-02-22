@@ -25,9 +25,18 @@ bool is_prime(const unsigned long num){
 
 int main(void)
 {
-    int temp = 0;
-    printf("please enter a number");
-    while(scanf("%d",&temp))
-    is_prime(temp);
-    return 0;
+    FILE* fp;
+    fp = fopen("INPUT.TXT","r");
+    if(fp == NULL){
+        printf("the file could not open correctly.\n\r");
+    }
+
+    int num = 0;
+    fscanf(fp,"%d", &num);
+    while(!feof(fp)){
+        is_prime(num);
+        fscanf(fp,"%d", &num);
+    }
+    fclose(fp);
+return 0;
 }
