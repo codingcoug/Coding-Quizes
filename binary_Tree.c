@@ -89,8 +89,8 @@ bool freeTree(binaryTree* tree){
 
 int main(){
 
-//tree root 
-binaryTree *tree;
+//tree root has to be set to NULL or segfault will occur
+binaryTree *tree = NULL;
 
         //      5
         //     / \
@@ -100,17 +100,28 @@ binaryTree *tree;
 
 //set root of tree to memory location and add value
 tree = adddata(tree,5);
-//add values
-adddata(tree,3);
-adddata(tree,3);
-adddata(tree,4);
-adddata(tree,2);
-adddata(tree,7);
-adddata(tree,6);
-adddata(tree,8);
 
-// printing the tree in numerical order
+FILE* fp;
+fp = fopen("INPUT.TXT","r");
+if(fp == NULL){
+    printf("the file could not open correctly.\n\r");
+}
+//create a cariable to be read from document into num variable
+//then create the base tree and add the number to the tree
+int num = 0;
+fscanf(fp,"%d", &num);
+tree = adddata(tree,num);
+
+//check for EOF and scan in a value and the add it to the tree until EOF
+while(!feof(fp)){
+    fscanf(fp,"%d", &num);
+    adddata(tree,num);
+}//close the filestream
+fclose(fp);
+
+// printing the tree in numerical order and make sure it's on it's own line
 treePrint(tree);
+printf("\n\r");
 
 return 0;
 }
